@@ -1,0 +1,34 @@
+version: '3.9'
+
+services:
+
+  api:
+    build: .
+    container_name: backend_api
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      DATABASE_URL: postgresql://postgres:password@postgres:5432/async_tasks
+      JWT_SECRET: supersecret
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+
+  postgres:
+    image: postgres:15
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: async_tasks
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7
+    container_name: redis_db
+    ports:
+      - "6379:6379"
