@@ -8,6 +8,8 @@ RUN npm install
 
 COPY . .
 
+ENV DATABASE_URL="postgresql://postgres:password@postgres:5432/async_tasks"
+
 RUN npx prisma generate
 
 EXPOSE 5000
