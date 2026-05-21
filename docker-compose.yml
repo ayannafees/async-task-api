@@ -5,6 +5,8 @@ services:
   api:
     build: .
     container_name: backend_api
+    command: sh -c "npx prisma db push && npm run dev"
+
     ports:
       - "5000:5000"
     depends_on:
@@ -21,7 +23,7 @@ services:
     build: .
     container_name: backend_worker
 
-    command: npm run worker
+    command: sh -c "npx prisma db push && npm run worker"
 
     depends_on:
       - postgres
